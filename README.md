@@ -6,8 +6,8 @@ A lot of testing is done in the software development process. Click the section 
 <details>
   <summary>Early prototypes (Click to expand)</summary>
 
-- [Babylon.js Test 1](https://bl4ckswordsman.github.io/ug-thesis-project/testing/babylonjs_test1)
-- [Three.js Test 1](https://bl4ckswordsman.github.io/ug-thesis-project/testing/threejs_test1)
+- [3D visualisation with Babylon.js - Test 1](https://bl4ckswordsman.github.io/ug-thesis-project/testing/babylonjs_test1)
+- [3D visualisation with Three.js - Test 1](https://bl4ckswordsman.github.io/ug-thesis-project/testing/threejs_test1)
 
 </details>
 
