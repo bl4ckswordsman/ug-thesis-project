@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@babylonjs/serializers": "^6.44.0"
+  }
+}

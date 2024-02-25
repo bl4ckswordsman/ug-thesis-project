@@ -1,0 +1,11 @@
+Model Information:
+* title:	Appartments building - BIMserver.center
+* source:	https://sketchfab.com/3d-models/appartments-building-bimservercenter-6dc0d4f9ef8442cfb8f27b4153179f3e
+* author:	vicente.plaza.cype (https://sketchfab.com/vicente.plaza.cype)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Appartments building - BIMserver.center" (https://sketchfab.com/3d-models/appartments-building-bimservercenter-6dc0d4f9ef8442cfb8f27b4153179f3e) by vicente.plaza.cype (https://sketchfab.com/vicente.plaza.cype) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
