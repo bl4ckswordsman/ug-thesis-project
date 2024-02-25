@@ -47,6 +47,14 @@ function init() {
     light.position.set(1, 1, 1).normalize();
     scene.add(light);
 
+    // Create ground
+    const groundGeometry = new THREE.PlaneGeometry(100, 100);
+    const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x888888 });
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2; // Rotate the ground to be horizontal
+    ground.position.y = -13; // Lower the ground level
+    scene.add(ground);
+
     loader.load('models/model1.gltf', function(gltf) {
         console.log('Model loaded'); // Log when the model is loaded
         scene.add(gltf.scene);
