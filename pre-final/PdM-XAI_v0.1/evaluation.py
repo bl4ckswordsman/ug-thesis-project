@@ -47,7 +47,7 @@ def plot_metrics(metrics, model_name):
         axs[i, 1].set_title(f'Histogram of {metric_name.capitalize()}s')
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/metrics_plots.png')
+    plt.savefig(f'results/{model_name}/{model_name}_metrics_plots.png')
 
 
 def plot_history(histories, folds, model_name):
@@ -97,4 +97,4 @@ def plot_confusion_matrices(confusion_matrices, model_name):
         axs[i].set_ylabel('True Label')
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/confusion_matrices.png')
+    plt.savefig(f'results/{model_name}/{model_name}_confusion_matrices.png')
