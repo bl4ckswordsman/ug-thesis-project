@@ -39,7 +39,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
     evaluate_and_append_accuracy(model, model_name, X_test, y_test_categorical, metrics, fold)
 
 # Load the histories from csv
-histories = [pd.read_csv(f'results/{model_name}/history_fold_{fold}.csv') for fold in range(1, kf.get_n_splits() + 1)]
+histories = [pd.read_csv(f'results/{model_name}/csv/history_fold_{fold}.csv') for fold in range(1, kf.get_n_splits() + 1)]
 folds = list(range(1, kf.get_n_splits() + 1))
 
 # Plot the histories

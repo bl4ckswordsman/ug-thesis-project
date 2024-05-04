@@ -26,7 +26,7 @@ def evaluate_and_append_accuracy(model, model_name, x_test, y_test, accuracies, 
     accuracies.append(metrics)
 
     metrics_df = pd.DataFrame(accuracies)
-    metrics_df.to_csv(f'results/{model_name}/{model_name}_metrics_fold_{fold}.csv', index=False)
+    metrics_df.to_csv(f'results/{model_name}/csv/{model_name}_metrics_fold_{fold}.csv', index=False)
 
     print(metrics_df)
 
@@ -47,7 +47,7 @@ def plot_metrics(metrics, model_name):
         axs[i, 1].set_title(f'Histogram of {metric_name.capitalize()}s')
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/{model_name}_metrics_plots.png')
+    plt.savefig(f'results/{model_name}/img/{model_name}_metrics_plots.png')
 
 
 def plot_history(histories, folds, model_name):
@@ -65,7 +65,7 @@ def plot_history(histories, folds, model_name):
         axs[i, 1].set_xlabel('Epoch')
 
         plt.tight_layout()
-        plt.savefig(f'results/{model_name}/history_fold_{folds[i]}.png')
+        plt.savefig(f'results/{model_name}/img/history_fold_{folds[i]}.png')
 
     fig, axs = plt.subplots(2, 1, figsize=(12, 12))
 
@@ -84,7 +84,7 @@ def plot_history(histories, folds, model_name):
     axs[1].legend()
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/history_all_folds.png')
+    plt.savefig(f'results/{model_name}/img/history_all_folds.png')
 
 
 def plot_confusion_matrices(confusion_matrices, model_name):
@@ -97,4 +97,4 @@ def plot_confusion_matrices(confusion_matrices, model_name):
         axs[i].set_ylabel('True Label')
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/{model_name}_confusion_matrices.png')
+    plt.savefig(f'results/{model_name}/img/{model_name}_confusion_matrices.png')

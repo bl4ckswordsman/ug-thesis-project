@@ -25,6 +25,6 @@ def create_and_train_model(x_train, y_train, num_classes, fold):
 
     # Save to csv
     model_name = type(model).__name__
-    hist_df.to_csv(f'results/{model_name}/history_fold_{fold}.csv')
+    hist_df.to_csv(f'results/{model_name}/csv/history_fold_{fold}.csv')
 
     return model, model_name
