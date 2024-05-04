@@ -10,6 +10,9 @@ from preprocessing import load_and_preprocess_data
 # Load and preprocess the data
 X, y, le = load_and_preprocess_data()
 
+# Get the class labels
+class_labels = le.classes_
+
 # Initialize the cross-validator
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 
@@ -52,7 +55,7 @@ plot_metrics(metrics, model_name)
 confusion_matrices = [metrics['confusion_matrix'] for metrics in metrics]
 
 # Plot the confusion matrices
-plot_confusion_matrices(confusion_matrices, model_name)
+plot_confusion_matrices(confusion_matrices, model_name, class_labels)
 
 # Save the model
 model.save(model_dir + '/' + model_name + '/model.keras')
