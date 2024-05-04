@@ -4,7 +4,7 @@ from sklearn.model_selection import KFold
 from tensorflow.keras.utils import to_categorical
 
 from evaluation import evaluate_and_append_accuracy, plot_metrics, plot_history, plot_confusion_matrices
-from model import create_and_train_model
+from model import create_and_train_model, create_seq_model
 from preprocessing import load_and_preprocess_data
 
 # Load and preprocess the data
@@ -36,13 +36,14 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
     y_test_categorical = to_categorical(y_test, num_classes=len(le.classes_))
 
     # Create and train the model
-    model, model_name = create_and_train_model(X_train, y_train_categorical, len(le.classes_), fold)
+    model, model_name = create_and_train_model(X_train, y_train_categorical, create_seq_model, len(le.classes_), fold)
 
     # Evaluate the model and append the accuracy to the list
     evaluate_and_append_accuracy(model, model_name, X_test, y_test_categorical, metrics, fold)
 
 # Load the histories from csv
-histories = [pd.read_csv(f'results/{model_name}/csv/history_fold_{fold}.csv') for fold in range(1, kf.get_n_splits() + 1)]
+histories = [pd.read_csv(
+    f'results/{model_name}/csv/history_fold_{fold}.csv') for fold in range(1, kf.get_n_splits() + 1)]
 folds = list(range(1, kf.get_n_splits() + 1))
 
 # Plot the histories
