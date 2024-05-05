@@ -5,6 +5,8 @@ import pandas as pd
 from matplotlib.colors import LogNorm
 from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
 
+from utils import ensure_dir
+
 
 def evaluate_and_append_accuracy(model, model_name, x_test, y_test, accuracies, fold):
     y_score = model.predict(x_test)
@@ -27,7 +29,9 @@ def evaluate_and_append_accuracy(model, model_name, x_test, y_test, accuracies, 
     accuracies.append(metrics)
 
     metrics_df = pd.DataFrame(accuracies)
-    metrics_df.to_csv(f'results/{model_name}/csv/{model_name}_metrics_fold_{fold}.csv', index=False)
+    metrics_path = f'results/{model_name}/csv/{model_name}_metrics_fold_{fold}.csv'
+    ensure_dir(metrics_path)
+    metrics_df.to_csv(metrics_path, index=False)
 
     # print(metrics_df)
 
@@ -50,8 +54,9 @@ def plot_metrics(metrics, model_name):
         axs[i, 1].grid(True)
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/img/{model_name}_metrics_plots.png')
-
+    plt_path = f'results/{model_name}/img/{model_name}_metrics_plots.png'
+    ensure_dir(plt_path)
+    plt.savefig(plt_path)
 
 def plot_history(histories, folds, model_name):
     fig, axs = plt.subplots(len(histories), 2, figsize=(12, 12 * len(histories)))
@@ -70,7 +75,9 @@ def plot_history(histories, folds, model_name):
         axs[i, 1].grid(True)
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/img/history_fold_{folds[i]}.png')
+    plt_path = f'results/{model_name}/img/history_fold_{folds[i]}.png'
+    ensure_dir(plt_path)
+    plt.savefig(plt_path)
 
     fig, axs = plt.subplots(2, 1, figsize=(12, 12))
 
@@ -91,8 +98,9 @@ def plot_history(histories, folds, model_name):
     axs[1].legend()
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/img/history_all_folds.png')
-
+    all_plt_path = f'results/{model_name}/img/history_all_folds.png'
+    ensure_dir(all_plt_path)
+    plt.savefig(all_plt_path)
 
 def plot_confusion_matrices(confusion_matrices, model_name, class_labels):
     fig, axs = plt.subplots(len(confusion_matrices), 1, figsize=(6, 6 * len(confusion_matrices)))
@@ -108,4 +116,7 @@ def plot_confusion_matrices(confusion_matrices, model_name, class_labels):
         axs[i].set_ylabel('True Label')
 
     plt.tight_layout()
-    plt.savefig(f'results/{model_name}/img/{model_name}_confusion_matrices.png')
+
+    plt_path = f'results/{model_name}/img/{model_name}_confusion_matrices.png'
+    ensure_dir(plt_path)
+    plt.savefig(plt_path)

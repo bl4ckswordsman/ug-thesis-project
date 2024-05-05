@@ -4,8 +4,9 @@ from sklearn.model_selection import KFold
 from tensorflow.keras.utils import to_categorical
 
 from evaluation import evaluate_and_append_accuracy, plot_metrics, plot_history, plot_confusion_matrices
-from model import create_and_train_model, create_seq_model
+from model import create_and_train_model, create_seq_model, create_deep_model, create_deep_model2
 from preprocessing import load_and_preprocess_data
+from utils import ensure_dir
 
 # Load and preprocess the data
 X, y, le = load_and_preprocess_data()
@@ -36,7 +37,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
     y_test_categorical = to_categorical(y_test, num_classes=len(le.classes_))
 
     # Create and train the model
-    model, model_name = create_and_train_model(X_train, y_train_categorical, create_seq_model, len(le.classes_), fold)
+    model, model_name = create_and_train_model(X_train, y_train_categorical, create_deep_model2, len(le.classes_), fold)
 
     # Evaluate the model and append the accuracy to the list
     evaluate_and_append_accuracy(model, model_name, X_test, y_test_categorical, metrics, fold)
@@ -59,7 +60,11 @@ confusion_matrices = [metrics['confusion_matrix'] for metrics in metrics]
 plot_confusion_matrices(confusion_matrices, model_name, class_labels)
 
 # Save the model
-model.save(model_dir + '/' + model_name + '/model.keras')
+model_path = model_dir + '/' + model_name + '/model.keras'
+ensure_dir(model_path)
+model.save(model_path)
 
 # Save the label encoder
-joblib.dump(le, (model_dir + '/' + model_name + '/label_encoder.joblib'))
+le_path = model_dir + '/' + model_name + '/label_encoder.joblib'
+ensure_dir(le_path)
+joblib.dump(le, le_path)
