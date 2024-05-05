@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import KFold
 from tensorflow.keras.utils import to_categorical
 
-from evaluation import evaluate_and_append_accuracy, plot_metrics, plot_history, plot_confusion_matrices
+from evaluation import evaluate_and_append_accuracy, plot_metrics, plot_history, plot_confusion_matrices, plot_model_metrics
 from model import create_and_train_model, create_seq_model, create_deep_model, create_deep_model2
 from preprocessing import load_and_preprocess_data
 from utils import ensure_dir
@@ -58,6 +58,9 @@ confusion_matrices = [metrics['confusion_matrix'] for metrics in metrics]
 
 # Plot the confusion matrices
 plot_confusion_matrices(confusion_matrices, model_name, class_labels)
+
+# Plot the comparison of models
+plot_model_metrics()
 
 # Save the model
 model_path = model_dir + '/' + model_name + '/model.keras'

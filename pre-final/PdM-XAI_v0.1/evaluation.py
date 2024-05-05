@@ -58,6 +58,7 @@ def plot_metrics(metrics, model_name):
     ensure_dir(plt_path)
     plt.savefig(plt_path)
 
+
 def plot_history(histories, folds, model_name):
     fig, axs = plt.subplots(len(histories), 2, figsize=(12, 12 * len(histories)))
 
@@ -102,6 +103,7 @@ def plot_history(histories, folds, model_name):
     ensure_dir(all_plt_path)
     plt.savefig(all_plt_path)
 
+
 def plot_confusion_matrices(confusion_matrices, model_name, class_labels):
     fig, axs = plt.subplots(len(confusion_matrices), 1, figsize=(6, 6 * len(confusion_matrices)))
 
@@ -110,7 +112,8 @@ def plot_confusion_matrices(confusion_matrices, model_name, class_labels):
 
     for i, conf_matrix in enumerate(confusion_matrices):
         # Create a heatmap from the confusion matrix with the logarithmic color scale
-        sns.heatmap(conf_matrix, annot=True, fmt='d', ax=axs[i], cmap='Blues', xticklabels=class_labels, yticklabels=class_labels, norm=log_norm)
+        sns.heatmap(conf_matrix, annot=True, fmt='d', ax=axs[i], cmap='Blues', xticklabels=class_labels,
+                    yticklabels=class_labels, norm=log_norm)
         axs[i].set_title(f'{model_name} Confusion Matrix for Fold {i + 1}')
         axs[i].set_xlabel('Predicted Label')
         axs[i].set_ylabel('True Label')
@@ -120,3 +123,46 @@ def plot_confusion_matrices(confusion_matrices, model_name, class_labels):
     plt_path = f'results/{model_name}/img/{model_name}_confusion_matrices.png'
     ensure_dir(plt_path)
     plt.savefig(plt_path)
+
+
+def plot_model_metrics(model_dirs='results'):
+    import os
+    import glob
+
+    # Identify all the model directories in the `results` directory
+    model_dirs = [d for d in os.listdir(model_dirs) if os.path.isdir(os.path.join(model_dirs, d))]
+
+    # Initialize a dictionary to store metrics for all models
+    all_metrics = {}
+
+    # For each model directory, read the metrics CSV files
+    for model_dir in model_dirs:
+        csv_files = glob.glob(f'results/{model_dir}/csv/*_metrics_*.csv')
+
+        # Initialize a dictionary to store metrics for the current model
+        model_metrics = {'accuracy': [], 'precision': [], 'recall': [], 'f1-score': [], 'roc_auc': []}
+
+        # Extract the required metrics from each CSV file
+        for csv_file in csv_files:
+            df = pd.read_csv(csv_file)
+            for metric in model_metrics.keys():
+                model_metrics[metric].append(df[metric].mean())
+
+        # Store the metrics for the current model in the all_metrics dictionary
+        all_metrics[model_dir] = model_metrics
+
+    # Plot the comparison of metrics across models
+    for metric in ['accuracy', 'precision', 'recall', 'f1-score', 'roc_auc']:
+        plt.figure(figsize=(10, 6))
+        for model, metrics in all_metrics.items():
+            plt.plot(metrics[metric], label=model)
+        plt.title(f'Comparison of {metric} across models')
+        plt.xlabel('Fold')
+        plt.ylabel(metric)
+        plt.legend()
+
+        # Save the plots to the `results/all/img` directory
+        plt_path = f'results/all/img/{metric}_comparison.png'
+        ensure_dir(plt_path)
+        plt.savefig(plt_path)
+        plt.close()
