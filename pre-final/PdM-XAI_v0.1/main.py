@@ -63,11 +63,11 @@ plot_confusion_matrices(confusion_matrices, model_name, class_labels)
 plot_model_metrics()
 
 # Save the model
-model_path = model_dir + '/' + model_name + '/model.keras'
+model_path = f'{model_dir}/{model_name}/model.keras'
 ensure_dir(model_path)
 model.save(model_path)
 
 # Save the label encoder
-le_path = model_dir + '/' + model_name + '/label_encoder.joblib'
+le_path = f'{model_dir}/{model_name}/label_encoder.joblib'
 ensure_dir(le_path)
 joblib.dump(le, le_path)

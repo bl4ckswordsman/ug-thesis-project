@@ -153,16 +153,51 @@ def plot_model_metrics(model_dirs='results'):
 
     # Plot the comparison of metrics across models
     for metric in ['accuracy', 'precision', 'recall', 'f1-score', 'roc_auc']:
+        # Line chart
         plt.figure(figsize=(10, 6))
         for model, metrics in all_metrics.items():
-            plt.plot(metrics[metric], label=model)
+            if metrics[metric]:  # Check if the list is not empty
+                line, = plt.plot(metrics[metric], label=model)
+                for i, value in enumerate(metrics[metric]):
+                    plt.annotate(f'{value:.3f}', (i, value), textcoords="offset points", xytext=(0, 10),
+                                 ha='center', color=line.get_color())
         plt.title(f'Comparison of {metric} across models')
         plt.xlabel('Fold')
         plt.ylabel(metric)
         plt.legend()
 
-        # Save the plots to the `results/all/img` directory
+        # Save the line chart to the `results/all/img` directory
         plt_path = f'results/all/img/{metric}_comparison.png'
         ensure_dir(plt_path)
         plt.savefig(plt_path)
         plt.close()
+
+        # Bar chart
+        plt.figure(figsize=(10, 6))
+        model_names = []
+        mean_metrics = []
+        std_metrics = []
+        for model, metrics in all_metrics.items():
+            if metrics[metric]:  # Check if the list is not empty
+                model_names.append(model)
+                mean_metrics.append(np.mean(metrics[metric]))
+                std_metrics.append(np.std(metrics[metric]))
+
+        # Plotting the bar chart
+        plt.bar(model_names, mean_metrics, yerr=std_metrics, capsize=10)
+        plt.title(f'Comparison of {metric} across models')
+        plt.xlabel('Model')
+        plt.ylabel(metric)
+        plt.xticks(rotation=5)
+
+        # Save the bar chart to the `results/all/img` directory
+        plt_path = f'results/all/img/{metric}_comparison_bar.png'
+        ensure_dir(plt_path)
+        plt.savefig(plt_path)
+        plt.close()
+
+    # Convert the all_metrics dictionary to a DataFrame and save it as a CSV file
+    all_metrics_df = pd.DataFrame(all_metrics)
+    csv_path = 'results/all/csv/metrics_comparison.csv'
+    ensure_dir(csv_path)
+    all_metrics_df.to_csv(csv_path)
