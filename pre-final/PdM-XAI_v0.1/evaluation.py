@@ -184,11 +184,16 @@ def plot_model_metrics(model_dirs='results'):
                 std_metrics.append(np.std(metrics[metric]))
 
         # Plotting the bar chart
-        plt.bar(model_names, mean_metrics, yerr=std_metrics, capsize=10)
+        bars = plt.bar(model_names, mean_metrics, yerr=std_metrics, capsize=10)
         plt.title(f'Comparison of {metric} across models')
         plt.xlabel('Model')
         plt.ylabel(metric)
         plt.xticks(rotation=5)
+
+        # Adding labels above the bars
+        for bar in bars:
+            yval = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width() / 2, yval + 0.01, round(yval, 3), ha='center', va='bottom')
 
         # Save the bar chart to the `results/all/img` directory
         plt_path = f'results/all/img/{metric}_comparison_bar.png'
