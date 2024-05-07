@@ -3,7 +3,8 @@ import pandas as pd
 from sklearn.model_selection import KFold
 from tensorflow.keras.utils import to_categorical
 
-from evaluation import evaluate_and_append_accuracy, plot_metrics, plot_history, plot_confusion_matrices, plot_model_metrics
+from evaluation import evaluate_and_append_accuracy
+from plotting import plot_metrics, plot_history, plot_confusion_matrices, plot_model_metrics
 from model import create_and_train_model, create_seq_model, create_deep_model, create_deep_model2
 from preprocessing import load_and_preprocess_data
 from utils import ensure_dir
