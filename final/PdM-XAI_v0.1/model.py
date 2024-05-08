@@ -1,3 +1,5 @@
+import time
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Input, Dropout, BatchNormalization
 import pandas as pd
@@ -41,7 +43,8 @@ def create_deep_model(input_shape, num_classes):
 def create_deep_model2(input_shape, num_classes):
     model = Sequential()
     model.add(Input(shape=input_shape))  # Input layer
-    model.add(Dense(128, activation='relu', kernel_regularizer=l2(0.01)))  # Hidden layer 1, 128 neurons, ReLU activation
+    model.add(
+        Dense(128, activation='relu', kernel_regularizer=l2(0.01)))  # Hidden layer 1, 128 neurons, ReLU activation
     model.add(BatchNormalization())
     model.add(Dropout(0.5))  # Dropout layer 1
     model.add(Dense(256, activation='relu', kernel_regularizer=l2(0.01)))  # Hidden layer 2
@@ -62,11 +65,23 @@ def create_and_train_model(
     # Create the model using the provided function
     model, model_name = create_model_func((x_train.shape[1],), num_classes)
 
+    # Record the start time
+    start_time = time.time()
+
     # Train the model and save the history
     history = model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)
 
+    # Record the end time
+    end_time = time.time()
+
+    # Calculate the training time
+    training_time = end_time - start_time
+
     # Convert the history.history dict to a pandas DataFrame
     hist_df = pd.DataFrame(history.history)
+
+    # Add the training time to the DataFrame
+    hist_df['training_time'] = training_time
 
     # Save to csv
     hist_path = f'results/{model_name}/csv/history_fold_{fold}.csv'

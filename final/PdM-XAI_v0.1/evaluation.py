@@ -14,13 +14,20 @@ def evaluate_and_append_accuracy(model, model_name, x_test, y_test, accuracies, 
     roc_auc = roc_auc_score(y_test, y_score, multi_class='ovo')
     conf_matrix = confusion_matrix(y_test, y_pred)
 
+    # Load the history from csv
+    history = pd.read_csv(f'results/{model_name}/csv/history_fold_{fold}.csv')
+
+    # Get the training time from the history
+    training_time = history['training_time'].values[0]
+
     metrics = {
         'accuracy': report['accuracy'],
         'precision': report['weighted avg']['precision'],
         'recall': report['weighted avg']['recall'],
         'f1-score': report['weighted avg']['f1-score'],
         'roc_auc': roc_auc,
-        'confusion_matrix': conf_matrix
+        'confusion_matrix': conf_matrix,
+        'training_time': training_time  # Add the training time to the metrics
     }
 
     accuracies.append(metrics)
