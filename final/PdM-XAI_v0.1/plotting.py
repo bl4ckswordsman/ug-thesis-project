@@ -98,7 +98,6 @@ def plot_confusion_matrices(confusion_matrices, model_name, class_labels):
 
 
 def plot_model_metrics(model_dirs='results'):
-
     # Identify all the model directories in the `results` directory
     model_dirs = [d for d in os.listdir(model_dirs) if os.path.isdir(os.path.join(model_dirs, d))]
 
@@ -110,7 +109,7 @@ def plot_model_metrics(model_dirs='results'):
         csv_files = glob.glob(f'results/{model_dir}/csv/*_metrics_*.csv')
 
         # Initialize a dictionary to store metrics for the current model
-        model_metrics = {'accuracy': [], 'precision': [], 'recall': [], 'f1-score': [], 'roc_auc': []}
+        model_metrics = {'accuracy': [], 'precision': [], 'recall': [], 'f1-score': [], 'roc_auc': [], 'training_time': []}
 
         # Extract the required metrics from each CSV file
         for csv_file in csv_files:
@@ -122,7 +121,7 @@ def plot_model_metrics(model_dirs='results'):
         all_metrics[model_dir] = model_metrics
 
     # Plot the comparison of metrics across models
-    for metric in ['accuracy', 'precision', 'recall', 'f1-score', 'roc_auc']:
+    for metric in ['accuracy', 'precision', 'recall', 'f1-score', 'roc_auc', 'training_time']:
         # Line chart
         plt.figure(figsize=(10, 6))
         for model, metrics in all_metrics.items():
@@ -176,3 +175,20 @@ def plot_model_metrics(model_dirs='results'):
     csv_path = 'results/all/csv/metrics_comparison.csv'
     ensure_dir(csv_path)
     all_metrics_df.to_csv(csv_path)
+
+
+def plot_feature_importances(importances, std, indices, feature_names, model_name, fold):
+    # Plot the feature importances
+    plt.figure()
+    plt.title("Feature importances")
+    plt.bar(range(len(indices)), importances[indices], color="r", yerr=std[indices], align="center")
+    plt.xticks(range(len(indices)), [feature_names[i] for i in indices], rotation='vertical')
+    plt.xlim([-1, len(indices)])
+
+    # Adjust the bottom margin
+    plt.subplots_adjust(bottom=0.40)
+
+    # Save the plot
+    plt_path = f'results/{model_name}/XAI_img/pfi_fold_{fold}.png'
+    ensure_dir(plt_path)
+    plt.savefig(plt_path)

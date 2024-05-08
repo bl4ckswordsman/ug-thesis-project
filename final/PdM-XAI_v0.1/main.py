@@ -8,6 +8,7 @@ from plotting import plot_metrics, plot_history, plot_confusion_matrices, plot_m
 from model import create_and_train_model, create_seq_model, create_deep_model, create_deep_model2
 from preprocessing import load_and_preprocess_data
 from utils import ensure_dir
+from explainabilty import explain_model_with_pfi, keras_score
 
 # Load and preprocess the data
 X, y, le = load_and_preprocess_data()
@@ -28,6 +29,10 @@ model_dir = 'model_data'
 model = None
 model_name = None
 
+# Initialize lists to store importances and standard deviations for each fold
+all_importances = []
+all_std = []
+
 # Cross-validation
 for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
     X_train, X_test = X.iloc[train_index], X.iloc[test_index]
@@ -38,10 +43,26 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
     y_test_categorical = to_categorical(y_test, num_classes=len(le.classes_))
 
     # Create and train the model
-    model, model_name = create_and_train_model(X_train, y_train_categorical, create_deep_model2, len(le.classes_), fold)
+    model, model_name = create_and_train_model(X_train, y_train_categorical,
+                                               create_deep_model2, len(le.classes_), fold)
+
+    # Save the test data
+    test_data_path = f'{model_dir}/{model_name}/test_data_fold_{fold}.joblib'
+    ensure_dir(test_data_path)
+    joblib.dump((X_test, y_test_categorical), test_data_path)
+
+    # Explain the model with Permutation Feature Importance
+    importances, std, indices = explain_model_with_pfi(model, model_name,
+                                                       X_test, y_test_categorical, fold, scoring=keras_score,
+                                                       feature_names=X.columns, all_importances=all_importances,
+                                                       all_std=all_std)
 
     # Evaluate the model and append the accuracy to the list
     evaluate_and_append_accuracy(model, model_name, X_test, y_test_categorical, metrics, fold)
+
+# After the cross-validation loop, generate the combined plot
+explain_model_with_pfi(None, model_name, X, None, None, None, X.columns, all_importances=all_importances,
+                       all_std=all_std)
 
 # Load the histories from csv
 histories = [pd.read_csv(
