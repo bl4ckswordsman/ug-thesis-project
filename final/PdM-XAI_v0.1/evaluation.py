@@ -38,4 +38,3 @@ def evaluate_and_append_accuracy(model, model_name, x_test, y_test, accuracies, 
     metrics_df.to_csv(metrics_path, index=False)
 
     # print(metrics_df)
-

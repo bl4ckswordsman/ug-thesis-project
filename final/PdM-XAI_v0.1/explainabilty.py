@@ -1,10 +1,7 @@
 import numpy as np
-from matplotlib import pyplot as plt
 from sklearn.inspection import permutation_importance
-from sklearn.metrics import get_scorer
 
 from plotting import plot_feature_importances
-from utils import ensure_dir
 
 
 def keras_score(estimator, X, y):
@@ -26,7 +23,8 @@ def calculate_pfi(model, x_val, y_val, scoring):
     return importances, std, indices
 
 
-def explain_model_with_pfi(model, model_name, x_val, y_val, fold, scoring, feature_names, all_importances=None, all_std=None):
+def explain_model_with_pfi(model, model_name, x_val, y_val, fold, scoring,
+                           feature_names, all_importances=None, all_std=None):
     if model is not None:
         importances, std, indices = calculate_pfi(model, x_val, y_val, scoring)
         plot_feature_importances(importances, std, indices, feature_names, model_name, fold)
