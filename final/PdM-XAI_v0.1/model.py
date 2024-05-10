@@ -11,6 +11,10 @@ epochs_nr = 50
 batch_size_nr = 10
 
 
+#     Artificial Neural Networks (ANNs),
+#      specifically Feedforward Neural Networks (FNNs)
+#      or Multilayer Perceptrons (MLPs):
+
 def create_seq_model(input_shape, num_classes):
     model = Sequential()
     model.add(Input(shape=input_shape))  # Input layer
@@ -58,6 +62,40 @@ def create_deep_model2(input_shape, num_classes):
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     return model, "Deep_3Layer_128_256_128_ReLU_Adam"
+
+
+def create_simple_model(input_shape, num_classes):
+    model = Sequential()
+    model.add(Input(shape=input_shape))  # Input layer
+    model.add(Dense(32, activation='relu'))  # Hidden layer
+    model.add(Dense(num_classes, activation='softmax'))  # Output layer
+
+    # Compile the model
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    return model, "Simple_1Layer_32_ReLU_Adam"
+
+
+def create_complex_model(input_shape, num_classes):
+    model = Sequential()
+    model.add(Input(shape=input_shape))  # Input layer
+    model.add(Dense(128, activation='relu'))  # Hidden layer 1
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))  # Dropout layer 1
+    model.add(Dense(256, activation='relu'))  # Hidden layer 2
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))  # Dropout layer 2
+    model.add(Dense(256, activation='relu'))  # Hidden layer 3
+    model.add(BatchNormalization())
+    model.add(Dropout(0.5))  # Dropout layer 3
+    model.add(Dense(128, activation='relu'))  # Hidden layer 4
+    model.add(BatchNormalization())
+    model.add(Dense(num_classes, activation='softmax'))  # Output layer
+
+    # Compile the model
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+    return model, "Complex_4Layer_128_256_256_128_ReLU_Adam"
 
 
 def create_and_train_model(
