@@ -142,7 +142,7 @@ def plot_model_metrics(model_dirs='results'):
         plt.close()
 
         # Bar chart
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=(10, 8))
         model_names = []
         mean_metrics = []
         std_metrics = []
@@ -157,7 +157,10 @@ def plot_model_metrics(model_dirs='results'):
         plt.title(f'Comparison of {metric} across models')
         plt.xlabel('Model')
         plt.ylabel(metric)
-        plt.xticks(rotation=5)
+        plt.xticks(rotation=40, ha='right')
+
+        # Adjust the bottom margin
+        plt.subplots_adjust(bottom=0.35)
 
         # Adding labels above the bars
         for bar in bars:
