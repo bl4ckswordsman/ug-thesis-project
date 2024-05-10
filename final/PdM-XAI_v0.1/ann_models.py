@@ -15,7 +15,7 @@ batch_size_nr = 10
 #      specifically Feedforward Neural Networks (FNNs)
 #      or Multilayer Perceptrons (MLPs):
 
-def create_seq_model(input_shape, num_classes):
+def create_model1(input_shape, num_classes):
     model = Sequential()
     model.add(Input(shape=input_shape))  # Input layer
     model.add(Dense(32, activation='relu'))  # Hidden layer 1, 32 neurons, ReLU(Rectified Linear Unit) activation
@@ -28,7 +28,7 @@ def create_seq_model(input_shape, num_classes):
     return model, "Seq_2Layer_32_64_ReLU_Adam"
 
 
-def create_deep_model(input_shape, num_classes):
+def create_model2(input_shape, num_classes):
     model = Sequential()
     model.add(Input(shape=input_shape))  # Input layer
     model.add(Dense(64, activation='relu'))  # Hidden layer 1, 64 neurons, ReLU(Rectified Linear Unit) activation
@@ -44,7 +44,7 @@ def create_deep_model(input_shape, num_classes):
     return model, "Deep_3Layer_64_128_64_ReLU_Adam"
 
 
-def create_deep_model2(input_shape, num_classes):
+def create_model3(input_shape, num_classes):
     model = Sequential()
     model.add(Input(shape=input_shape))  # Input layer
     model.add(
@@ -64,7 +64,7 @@ def create_deep_model2(input_shape, num_classes):
     return model, "Deep_3Layer_128_256_128_ReLU_Adam"
 
 
-def create_simple_model(input_shape, num_classes):
+def create_model4(input_shape, num_classes):
     model = Sequential()
     model.add(Input(shape=input_shape))  # Input layer
     model.add(Dense(32, activation='relu'))  # Hidden layer
@@ -76,7 +76,7 @@ def create_simple_model(input_shape, num_classes):
     return model, "Simple_1Layer_32_ReLU_Adam"
 
 
-def create_complex_model(input_shape, num_classes):
+def create_model5(input_shape, num_classes):
     model = Sequential()
     model.add(Input(shape=input_shape))  # Input layer
     model.add(Dense(128, activation='relu'))  # Hidden layer 1
