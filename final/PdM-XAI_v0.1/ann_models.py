@@ -1,6 +1,6 @@
 import time
 
-from tensorflow.keras.models import Sequential
+from keras import Sequential
 from tensorflow.keras.layers import Dense, Input, Dropout, BatchNormalization
 import pandas as pd
 from tensorflow.keras.regularizers import l2
