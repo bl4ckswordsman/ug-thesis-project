@@ -6,6 +6,7 @@ from tensorflow.keras.utils import to_categorical
 from evaluation import evaluate_and_append_accuracy
 from plotting import plot_metrics, plot_history, plot_confusion_matrices, plot_model_metrics
 from ann_models import create_and_train_model, create_model1, create_model2, create_model3, create_model4, create_model5
+from cnn_models import create_cnn_model1
 from preprocessing import load_and_preprocess_data
 from utils import ensure_dir
 from explainabilty import explain_model_with_pfi, keras_score
@@ -44,7 +45,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
 
     # Create and train the model
     model, model_name = create_and_train_model(X_train, y_train_categorical,
-                                               create_complex_model, len(le.classes_), fold)
+                                               create_model5, len(le.classes_), fold)
 
     # Save the test data
     test_data_path = f'{model_dir}/{model_name}/test_data_fold_{fold}.joblib'

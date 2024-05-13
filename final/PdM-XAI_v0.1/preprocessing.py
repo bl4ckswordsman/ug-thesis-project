@@ -10,7 +10,7 @@ def load_and_preprocess_data():
     df = pd.get_dummies(df, columns=['Type'])
     le = LabelEncoder()
     df['Failure Type'] = le.fit_transform(df['Failure Type'])
-    X = df.drop(['Failure Type', 'Product ID', 'UDI'], axis=1)
+    X = df.drop(['Failure Type', 'Product ID', 'UDI', 'Target'], axis=1)
     y = df['Failure Type']
 
     return X, y, le
