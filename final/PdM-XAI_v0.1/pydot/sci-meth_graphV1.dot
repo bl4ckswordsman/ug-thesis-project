@@ -1,0 +1,28 @@
+digraph ProjectMethodology {
+    node [shape=box, style=rounded, color=blue, fontname=Arial,
+        fontsize=20, penwidth=3.0];
+    graph [rankdir=UD, ratio=0.7];
+
+    Literature_Review [label="Literature Review and\nPreliminary Research"];
+    Data_Collection [label="Data Collection and\nPreprocessing"];
+    Model_Development [label="Model Development and\nTesting"];
+    Result_Storage [label="Result Storage and\nVisualization"];
+    Explainable_AI [label="Incorporation of Explainable\nAI (XAI)"];
+    Evaluate_Results [label="Evaluate Results"];
+    Communicate_Results [label="Communicate Results"];
+    Troubleshoot_Procedure [label="Troubleshoot Procedure"];
+    End [label="End", color=red];
+
+    Literature_Review -> Data_Collection[constraint=false];
+    Data_Collection -> Model_Development[constraint=false];
+    Model_Development -> Result_Storage;
+    Result_Storage -> Explainable_AI;
+    Explainable_AI -> Evaluate_Results;
+    Evaluate_Results -> Communicate_Results [label="Satisfactory", color=green,
+        fontsize=18];
+    Evaluate_Results -> Troubleshoot_Procedure [label="Needs Improvement",
+        color=red, fontsize=18];
+
+    Troubleshoot_Procedure -> Model_Development;
+    Communicate_Results -> End;
+}

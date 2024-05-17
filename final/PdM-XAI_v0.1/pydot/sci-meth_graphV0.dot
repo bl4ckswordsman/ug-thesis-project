@@ -1,0 +1,31 @@
+digraph ProjectMethodology {
+    node [shape=box, style=filled, color=lightyellow];
+
+    Literature_Review [label="Literature Review and\nPreliminary Research"];
+    Data_Collection [label="Data Collection and\nPreprocessing"];
+    Model_Development [label="Model Development and\nTesting"];
+    Result_Storage [label="Result Storage and\nVisualization"];
+    Explainable_AI [label="Incorporation of Explainable\nAI (XAI)"];
+    Evaluate_Results [label="Evaluate Results"];
+    Align_Hypothesis [label="Results Align with\nHypothesis?"];
+    Communicate_Results [label="Communicate Results"];
+    Troubleshoot_Procedure [label="Troubleshoot Procedure"];
+
+    New_Hypothesis_No [label="Form New Hypothesis,\nExperiment Again"];
+    End [label="End"];
+
+    Literature_Review -> Data_Collection;
+    Data_Collection -> Model_Development;
+    Model_Development -> Result_Storage;
+    Result_Storage -> Explainable_AI;
+    Explainable_AI -> Evaluate_Results;
+    Evaluate_Results -> Align_Hypothesis;
+
+    Align_Hypothesis -> Communicate_Results [label="Yes"];
+    Align_Hypothesis -> Troubleshoot_Procedure [label="No"];
+
+    Communicate_Results -> End;
+    Troubleshoot_Procedure -> New_Hypothesis_No;
+
+    New_Hypothesis_No -> Evaluate_Results;
+}
