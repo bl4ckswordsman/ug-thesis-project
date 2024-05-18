@@ -39,7 +39,9 @@ def explain_instance(model, instance, X):
     # Ensure the instance and X are float32 for SHAP
     instance = instance.astype('float32')
     X = X.astype('float32')
-    X_summary = shap.kmeans(X, 100)  # clusters for the kmeans algorithm
+
+    # Summarize the background data using a sample
+    X_summary = shap.sample(X, 100)
 
     # Create a SHAP explainer using the Kernel method
     explainer = shap.KernelExplainer(model.predict, X_summary)
@@ -95,14 +97,16 @@ def plot_additional_shap_plots(model, X, shap_values, feature_names, instance, c
     for class_label, values in class_shap_values.items():
         if values:
             combined_shap_values = np.mean(values, axis=0)
+            combined_shap_values = -combined_shap_values  # Invert the SHAP values
             plt.figure(figsize=(10, 7))  # Create a new figure with increased width
-            shap.waterfall_plot(
-                shap.Explanation(values=combined_shap_values,
-                                 base_values=np.mean([model.predict(instance)[0][k] for k in range(len(class_labels))]),
-                                 data=instance.iloc[0],
-                                 feature_names=feature_names))
+            explanation = shap.Explanation(
+                values=combined_shap_values,
+                base_values=np.mean([model.predict(instance)[0][k] for k in range(len(class_labels))]),
+                data=instance.iloc[0],
+                feature_names=feature_names
+            )
+            shap.waterfall_plot(explanation)
             plt.title(f"Waterfall Plot - Class: {class_label}")
-            plt.gcf().set_size_inches(10, 7)  # Explicitly set the size of the current figure
             waterf_path = f'{output_dir}/waterfall_plot_class_{class_label}.png'
             ensure_dir(waterf_path)
             plt.savefig(waterf_path, bbox_inches='tight')  # Use bbox_inches to include all content
