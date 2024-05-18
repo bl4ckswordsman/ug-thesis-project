@@ -7,6 +7,15 @@ import os
 import glob
 from utils import ensure_dir
 
+# Set the default font size
+plt.rcParams['font.size'] = 14
+
+# Set the font size for specific elements
+plt.rcParams['axes.titlesize'] = 16
+plt.rcParams['axes.labelsize'] = 14
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+
 
 def plot_metrics(metrics, model_name):
     metric_names = [name for name in metrics[0].keys() if name != 'confusion_matrix']
@@ -157,10 +166,10 @@ def plot_model_metrics(model_dirs='results'):
         plt.title(f'Comparison of {metric} across models')
         plt.xlabel('Model')
         plt.ylabel(metric)
-        plt.xticks(rotation=40, ha='right')
+        plt.xticks(rotation=47, ha='right')
 
         # Adjust the bottom margin
-        plt.subplots_adjust(bottom=0.35)
+        plt.subplots_adjust(bottom=0.43)
 
         # Adding labels above the bars
         for bar in bars:
@@ -195,3 +204,4 @@ def plot_feature_importances(importances, std, indices, feature_names, model_nam
     plt_path = f'results/{model_name}/XAI_img/pfi_fold_{fold}.png'
     ensure_dir(plt_path)
     plt.savefig(plt_path)
+
