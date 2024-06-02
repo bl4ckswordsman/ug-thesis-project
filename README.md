@@ -8,7 +8,6 @@ Author: `amra2101`
 This repository contains all the source code and resources used for the experiments, model training, evaluation, and dataset preprocessing related to the thesis "From Traditional to Explainable AI-Driven Predictive Maintenance". The main focus is on evaluating the effectiveness of AI/ML models for predictive maintenance and enhancing transparency with Explainable AI (XAI) techniques.
 
 ## Repository Structure
-[/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1)
 
 - [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1): Main Python scripts and Jupyter Notebooks
   - [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1/datasets): Directory for the used dataset
