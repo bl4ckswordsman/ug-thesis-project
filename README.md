@@ -1,8 +1,25 @@
 # Undergraduate Thesis Project
+Title: `From Traditional to Explainable AI-Driven Predictive Maintenance`
+
+Author: `amra2101`
+
+## Overview
+
+This repository contains all the source code and resources used for the experiments, model training, evaluation, and dataset preprocessing related to the thesis "From Traditional to Explainable AI-Driven Predictive Maintenance". The main focus is on evaluating the effectiveness of AI/ML models for predictive maintenance and enhancing transparency with Explainable AI (XAI) techniques.
+
+## Repository Structure
+[/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1)
+
+- [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1): Main Python scripts and Jupyter Notebooks
+  - [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1/datasets): Directory for the used dataset
+  - [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1/model_data): Directory for processing and training data
+  - [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/final/PdM-XAI_v0.1/results): Directory for tables, plots of evaluation results, and XAI plots
+- [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/kaggle): Initial relevant experiments with Kaggle datasets/challenges
+- [/final/PdM-XAI_v0.1](https://github.com/bl4ckswordsman/ug-thesis-project/tree/master/testing): Early prototyping
 
 ## Testing
 
-A lot of testing is done in the software development process. Click the section below to expand the content and see some
+Click the section below to expand the content and see some
 of the early prototypes of the project.
 
 <details>
