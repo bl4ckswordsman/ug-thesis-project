@@ -1,0 +1,32 @@
+digraph G {
+    node [shape=ellipse, style=rounded, color=lightgreen, fontsize=24];
+    graph [rankdir=UD, ratio=0.7];
+
+    // Define the decision nodes
+    1 [label="Age < 15"];
+    2 [label="Is male?"];
+    3 [label="+2", shape=box, color=white];
+    4 [label="+0.1", shape=box, color=white];
+    5 [label="-1", shape=box, color=white];
+
+    // Define the images (emojis)
+    boy [label="👦", shape=plaintext];
+    girl [label="👧", shape=plaintext];
+    adult [label="👩 👵 \n 👨 👴", shape=plaintext];
+
+    // Define the connections
+    1 -> 2 [label="N", color=red];
+    1 -> 5 [label="Y", color=green];
+    2 -> 3 [label="Y", color=green];
+    2 -> 4 [label="N", color=red];
+
+    // Connect leaf nodes to emojis
+    3 -> boy;
+    4 -> girl;
+    5 -> adult;
+
+
+    // Define ranks to place emojis below the leaf nodes
+    { rank=same; boy; girl; adult; }
+    { rank=same; 3; 4; 5;}
+}

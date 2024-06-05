@@ -1,0 +1,32 @@
+
+digraph G {
+    node [shape=rect, style=rounded, fontsize=24];
+    graph [rankdir=UD, ratio=0.7];
+
+    // Define the decision nodes
+    1 [label="Temperature > 80°C"];
+    2 [label="Vibration > 5 mm/s"];
+    3 [label="Schedule Maintenance", shape=box, color=white];
+    4 [label="Inspect Machine", shape=box, color=white];
+    5 [label="Normal Operation", shape=box, color=white];
+
+    // Define the images (emojis)
+    schedule [label="🔧", shape=plaintext];
+    inspect [label="🔍", shape=plaintext];
+    normal [label="✅", shape=plaintext];
+
+    // Define the connections
+    1 -> 2 [label="N", color=red];
+    1 -> 3 [label="Y", color=green];
+    2 -> 4 [label="Y", color=green];
+    2 -> 5 [label="N", color=red];
+
+    // Connect leaf nodes to emojis
+    3 -> schedule;
+    4 -> inspect;
+    5 -> normal;
+
+    // Define ranks to place emojis below the leaf nodes
+    { rank=same; schedule; inspect; normal; }
+    { rank=same; 3; 4; 5;}
+}
