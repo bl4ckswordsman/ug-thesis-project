@@ -34,6 +34,9 @@ model_name = None
 all_importances = []
 all_std = []
 
+# Initialize list to store CPU usage for each fold
+cpu_usages = []
+
 # Cross-validation
 for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
     X_train, X_test = X.iloc[train_index], X.iloc[test_index]
@@ -45,7 +48,7 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
 
     # Create and train the model
     model, model_name = create_and_train_model(X_train, y_train_categorical,
-                                               create_model5, len(le.classes_), fold)
+                                               create_model1, len(le.classes_), fold)
 
     # Save the test data
     test_data_path = f'{model_dir}/{model_name}/test_data_fold_{fold}.joblib'
@@ -60,6 +63,19 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
 
     # Evaluate the model and append the accuracy to the list
     evaluate_and_append_accuracy(model, model_name, X_test, y_test_categorical, metrics, fold)
+
+    # Load the history from csv
+    history = pd.read_csv(f'results/{model_name}/csv/history_fold_{fold}.csv')
+
+    # Append the CPU usage to the list
+    cpu_usages.append(history['cpu_used'].values[0])
+
+# Calculate the mean CPU usage
+mean_cpu_usage = sum(cpu_usages) / len(cpu_usages)
+
+# Save the mean CPU usage to a CSV file
+mean_cpu_usage_df = pd.DataFrame([mean_cpu_usage], columns=['mean_cpu_usage'])
+mean_cpu_usage_df.to_csv(f'results/{model_name}/csv/mean_cpu_usage.csv', index=False)
 
 # After the cross-validation loop, generate the combined plot
 explain_model_with_pfi(None, model_name, X, None, None, None, X.columns, all_importances=all_importances,

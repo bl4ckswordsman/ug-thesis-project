@@ -169,7 +169,7 @@ def plot_model_metrics(model_dirs='results'):
         plt.xticks(rotation=47, ha='right')
 
         # Adjust the bottom margin
-        plt.subplots_adjust(bottom=0.43)
+        plt.subplots_adjust(bottom=0.23)
 
         # Adding labels above the bars
         for bar in bars:

@@ -19,6 +19,7 @@ def evaluate_and_append_accuracy(model, model_name, x_test, y_test, accuracies, 
 
     # Get the training time from the history
     training_time = history['training_time'].values[0]
+    cpu_used = history['cpu_used'].values[0]
 
     metrics = {
         'accuracy': report['accuracy'],
@@ -27,7 +28,8 @@ def evaluate_and_append_accuracy(model, model_name, x_test, y_test, accuracies, 
         'f1-score': report['weighted avg']['f1-score'],
         'roc_auc': roc_auc,
         'confusion_matrix': conf_matrix,
-        'training_time': training_time  # Add the training time to the metrics
+        'training_time': training_time,
+        'cpu_used': cpu_used
     }
 
     accuracies.append(metrics)
@@ -54,6 +56,7 @@ def evaluate_and_append_accuracy_tree(model, model_name, x_test, y_test, accurac
 
     # Get the training time from the history
     training_time = history['training_time'].values[0]
+    cpu_used = history['cpu_used'].values[0]
 
     metrics = {
         'accuracy': accuracy,
@@ -62,7 +65,8 @@ def evaluate_and_append_accuracy_tree(model, model_name, x_test, y_test, accurac
         'f1-score': report['weighted avg']['f1-score'],
         'roc_auc': roc_auc,
         'confusion_matrix': conf_matrix,
-        'training_time': training_time  # Add the training time to the metrics
+        'training_time': training_time,
+        'cpu_used': cpu_used
     }
 
     accuracies.append(metrics)

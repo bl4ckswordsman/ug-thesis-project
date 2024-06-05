@@ -5,6 +5,7 @@ from tensorflow.keras.layers import Dense, Input, Dropout, BatchNormalization
 import pandas as pd
 from tensorflow.keras.regularizers import l2
 
+from resource_logger import log_cpu_usage
 from utils import ensure_dir
 
 epochs_nr = 50
@@ -103,23 +104,27 @@ def create_and_train_model(
     # Create the model using the provided function
     model, model_name = create_model_func((x_train.shape[1],), num_classes)
 
-    # Record the start time
+    # Record the start time and CPU usage
     start_time = time.time()
+    start_cpu = log_cpu_usage()
 
     # Train the model and save the history
     history = model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)
 
-    # Record the end time
+    # Record the end time and CPU usage
     end_time = time.time()
+    end_cpu = log_cpu_usage()
 
-    # Calculate the training time
+    # Calculate the training time and CPU usage
     training_time = end_time - start_time
+    cpu_used = end_cpu - start_cpu
 
     # Convert the history.history dict to a pandas DataFrame
     hist_df = pd.DataFrame(history.history)
 
-    # Add the training time to the DataFrame
+    # Add the training time and CPU usage to the DataFrame
     hist_df['training_time'] = training_time
+    hist_df['cpu_used'] = cpu_used
 
     # Save to csv
     hist_path = f'results/{model_name}/csv/history_fold_{fold}.csv'
@@ -127,4 +132,3 @@ def create_and_train_model(
     hist_df.to_csv(hist_path)
 
     return model, model_name
-

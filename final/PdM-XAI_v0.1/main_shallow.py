@@ -32,6 +32,9 @@ model_name = None
 all_importances = []
 all_std = []
 
+# Initialize list to store CPU usage for each fold
+cpu_usages = []
+
 # Cross-validation
 for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
     X_train, X_test = X.iloc[train_index], X.iloc[test_index]
@@ -52,6 +55,19 @@ for fold, (train_index, test_index) in enumerate(kf.split(X), 1):
 
     # Evaluate the model and append the accuracy to the list
     evaluate_and_append_accuracy_tree(model, model_name, X_test, y_test, metrics, fold)
+
+    # Load the history from csv
+    history = pd.read_csv(f'results/{model_name}/csv/history_fold_{fold}.csv')
+
+    # Append the CPU usage to the list
+    cpu_usages.append(history['cpu_used'].mean())
+
+# Calculate the mean CPU usage
+mean_cpu_usage = sum(cpu_usages) / len(cpu_usages)
+
+# Save the mean CPU usage to a CSV file
+mean_cpu_usage_df = pd.DataFrame([mean_cpu_usage], columns=['mean_cpu_usage'])
+mean_cpu_usage_df.to_csv(f'results/{model_name}/csv/mean_cpu_usage.csv', index=False)
 
 # Load the histories from csv
 histories = [pd.read_csv(
