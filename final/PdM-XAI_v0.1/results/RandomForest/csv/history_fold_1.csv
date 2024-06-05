@@ -1,2 +1,2 @@
-,training_time,accuracy,loss
-0,0.48519039154052734,1.0,0.0
+,training_time,accuracy,loss,cpu_used
+0,0.4869570732116699,1.0,0.0,-15.399999999999999
